@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ShopBook</title>
+<meta name="theme-color" content="#000000">
+<style>
+:root{--bg:#fff;--s:#fff;--ink:#0a0a0a;--mut:#6b6b6b;--ln:#e6e6e6;--in:#16a34a;--out:#dc2626;--bl:#2563eb;--ac:#0a0a0a;--ai:#fff;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#000;--s:#0b0b0b;--ink:#f5f5f5;--mut:#9a9a9a;--ln:#242424;--in:#4ade80;--out:#f87171;--bl:#60a5fa;--ac:#f5f5f5;--ai:#000;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#000;--s:#0b0b0b;--ink:#f5f5f5;--mut:#9a9a9a;--ln:#242424;--in:#4ade80;--out:#f87171;--bl:#60a5fa;--ac:#f5f5f5;--ai:#000;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:560px;margin:0 auto;padding:10px 14px 96px}
+.top{display:flex;align-items:center;gap:10px;padding:6px 2px 14px;background:none;border:0;color:inherit;font:800 1.35rem system-ui,sans-serif;cursor:pointer;width:100%;text-align:left}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tile,.card{background:var(--s);border:1px solid var(--ln);border-radius:14px;padding:14px}
+.tile span{display:block;color:var(--mut);font-size:.82rem}
+.tile b{font-size:1.3rem;font-weight:700;letter-spacing:-.02em}
+b.in,td.in{color:var(--in)}b.out,td.out{color:var(--out)}b.bl,td.bl{color:var(--bl)}
+h2{font-size:1.1rem;margin:18px 2px 8px}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.chips button,.bt button,.act button{border:1px solid var(--ln);background:var(--s);color:var(--ink);border-radius:99px;padding:8px 14px;font:600 .9rem system-ui,sans-serif;cursor:pointer}
+.chips button[aria-pressed="true"],.bt .p,.add{background:var(--ac);color:var(--ai);border-color:var(--ac)}
+.add{width:100%;border-radius:12px;padding:13px;margin-bottom:12px;font:700 1rem system-ui,sans-serif;border:0;cursor:pointer}
+ul{list-style:none;margin:0;padding:0}
+li{display:flex;gap:10px;align-items:center;padding:11px 0;border-top:1px solid var(--ln)}
+li:first-child{border-top:0}
+.w{flex:1;min-width:0}.w strong{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.w span{font-size:.8rem;color:var(--mut)}
+.act{display:flex;gap:6px;margin-top:6px;flex-wrap:wrap}.act button{padding:5px 10px;font-size:.8rem}
+.x{border:0;background:none;color:var(--mut);font-size:1.3rem;cursor:pointer}
+.br{display:grid;grid-template-columns:78px 1fr auto;gap:8px;align-items:center;font-size:.85rem;margin:6px 0}
+.br i{display:block;height:10px;border-radius:5px;background:var(--in)}.br i.n,.br i.r{background:var(--out)}.br i.b{background:var(--bl)}
+table{width:100%;border-collapse:collapse;font-size:.92rem}td{padding:7px 0;border-top:1px solid var(--ln)}td+td{text-align:right;font-weight:700}
+nav{position:fixed;left:0;right:0;bottom:0;display:flex;background:var(--s);border-top:1px solid var(--ln);padding:6px 4px calc(6px + env(safe-area-inset-bottom,0px))}
+nav button{flex:1;background:none;border:0;color:var(--mut);font:600 .7rem system-ui,sans-serif;padding:4px 0;cursor:pointer}
+nav button{padding:12px 0;font-size:.8rem}
+nav button[aria-pressed="true"]{color:var(--ink);box-shadow:inset 0 2px 0 var(--ink)}
+#modal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:flex-end;justify-content:center;z-index:5}
+#modal[hidden]{display:none}
+.sheet{background:var(--s);width:100%;max-width:560px;border-radius:18px 18px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom,0px));max-height:90%;overflow:auto}
+.sheet h2{margin:0 0 10px}
+label{display:block;font-size:.85rem;color:var(--mut);margin-bottom:10px}
+input,select{display:block;width:100%;margin-top:4px;padding:11px;border:1px solid var(--ln);border-radius:10px;background:var(--bg);color:var(--ink);font:1rem system-ui,sans-serif}
+.bt{display:flex;gap:8px;margin-top:6px}.bt button{flex:1;border-radius:12px;padding:12px}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--in);outline-offset:2px}
+.big{font-size:2rem;font-weight:800;display:block}
+.empty{color:var(--mut);margin:0}
+@media (min-width:900px){main{max-width:980px}.grid{grid-template-columns:repeat(4,1fr)}.cols{display:grid;grid-template-columns:1fr 1fr;gap:0 16px}nav{justify-content:center}nav button{max-width:130px}#modal{align-items:center}.sheet{border-radius:18px;max-width:460px}}
+</style>
+</head>
+<body>
+<main>
+<button class="top" data-a="name" aria-label="Rename business"><span id="lg"></span><span id="nm"></span></button>
+<div id="v"></div>
+</main>
+<nav>
+<button data-a="tab" data-i="home">Home</button>
+<button data-a="tab" data-i="sales">Sales</button>
+<button data-a="tab" data-i="orders">Orders</button>
+<button data-a="tab" data-i="expenses">Expenses</button>
+<button data-a="tab" data-i="reports">Reports</button>
+</nav>
+<div id="modal" hidden></div>
+<script>
+(function(){
+var K="shopbook-v1",S={o:[],e:[],n:"ShopBook"},tab="home",per="month",DAY=864e5;
+var EC=["Salaries","Raw materials","Transport","Shop rent","Marketing","Other"];
+var LOGO='<svg viewBox="0 0 64 64" width="42" height="42" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#000" stroke="#444" stroke-width="2"/><rect x="14" y="36" width="9" height="14" rx="2" fill="#fff"/><rect x="27" y="28" width="9" height="22" rx="2" fill="#fff"/><rect x="40" y="18" width="9" height="32" rx="2" fill="#fff"/><circle cx="46" cy="12" r="6" fill="#16a34a"/></svg>';
+try{var r=JSON.parse(localStorage.getItem(K));if(r&&r.o)S=r}catch(e){}
+function sv(){try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}}
+function $(i){return document.getElementById(i)}
+function F(n){return(n<0?"−":"")+"৳"+Math.round(Math.abs(n)).toLocaleString("en-US")}
+function E(t){return String(t).replace(/[&<>"']/g,function(c){return"&#"+c.charCodeAt(0)+";"})}
+function now(){return Date.now()}
+function t0(){var d=new Date();d.setHours(0,0,0,0);return d.getTime()}
+function mS(k){var d=new Date();d.setHours(0,0,0,0);d.setDate(1);d.setMonth(d.getMonth()-k);return d.getTime()}
+function dt(t){return new Date(t).toLocaleDateString("en-GB",{day:"numeric",month:"short"})}
+function sum(a,f){return a.reduce(function(x,y){return x+f(y)},0)}
+function tt(o){return o.t}
+function del(){return S.o.filter(function(o){return o.s==="D"})}
+function rev(a,b){return sum(del().filter(function(o){return o.dd>=a&&o.dd<(b||1e15)}),tt)}
+function exp(a,b,c){return sum(S.e.filter(function(e){return e.ts>=a&&e.ts<(b||1e15)&&(!c||e.cat===c)}),function(e){return e.amt})}
+function chipsH(l,cur,a){return'<div class="chips">'+l.map(function(x){return'<button data-a="'+a+'" data-i="'+x[0]+'" aria-pressed="'+(x[0]===cur)+'">'+x[1]+'</button>'}).join("")+'</div>'}
+function row(o){var b=o.t-o.a;return'<li><div class="w"><strong>'+E(o.c)+' · '+E(o.item)+'</strong><span>'+dt(o.dd||o.ts)+(o.p?' · '+E(o.p):'')+(b>0?' · Due '+F(b):' · Paid in full')+'</span><div class="act">'+(b>0?'<button data-a="pay" data-i="'+o.id+'">Receive payment</button>':'')+(o.s==="P"?'<button data-a="dlv" data-i="'+o.id+'">Mark delivered</button>':'')+'<button data-a="delo" data-i="'+o.id+'">Delete</button></div></div><b class="bl">'+F(o.t)+'</b></li>'}
+function box(a,m){return'<div class="card">'+(a.length?'<ul>'+a.map(row).join("")+'</ul>':'<p class="empty">'+m+'</p>')+'</div>'}
+function home(){
+var rM=rev(mS(0)),eM=exp(mS(0)),P=S.o.filter(function(o){return o.s==="P"}),out=sum(S.o,function(o){return o.t-o.a}),cash=sum(S.o,function(o){return o.a})-exp(0),cu={};
+S.o.forEach(function(o){if(o.ts>=now()-30*DAY)cu[o.c.toLowerCase()]=1});
+var T=[["Today’s sales",F(rev(t0())),"bl"],["Monthly revenue",F(rM),"bl"],["Expenses (month)",F(eM),"out"],["Net profit",F(rM-eM),rM-eM<0?"out":"in"],["Pending orders",P.length],["Active customers",Object.keys(cu).length],["Outstanding",F(out),"bl"],["Cash balance",F(cash),cash<0?"out":"bl"]];
+return'<div class="grid">'+T.map(function(t){return'<div class="tile"><span>'+t[0]+'</span><b class="'+(t[2]||"")+'">'+t[1]+'</b></div>'}).join("")+'</div><h2>Last 6 months</h2><div class="card">'+bars(months(function(a,b){return rev(a,b)-exp(a,b)}))+'</div>'}
+function sales(){
+var f={day:t0(),week:t0()-6*DAY,month:mS(0),all:0}[per],L=del().filter(function(o){return o.dd>=f}).sort(function(a,b){return b.dd-a.dd});
+return'<button class="add" data-a="new">+ New sale / order</button>'+chipsH([["day","Today"],["week","7 days"],["month","This month"],["all","All"]],per,"per")+'<div class="card"><span class="empty">'+L.length+' completed orders</span><b class="big bl">'+F(sum(L,tt))+'</b></div><h2>Completed orders</h2>'+box(L,"No completed sales in this period.")}
+function orders(){
+var P=S.o.filter(function(o){return o.s==="P"}),D=S.o.filter(function(o){return o.s==="D"&&o.t>o.a});
+return'<button class="add" data-a="new">+ New sale / order</button><h2>Pending delivery ('+P.length+')</h2>'+box(P,"No pending orders.")+'<h2>Payment due</h2>'+box(D,"Nobody owes you money.")}
+function expenses(){
+var L=S.e.slice().sort(function(a,b){return b.ts-a.ts});
+return'<button class="add" data-a="newe">+ Add expense</button><div class="card"><span class="empty">Spent this month</span><b class="big out">'+F(exp(mS(0)))+'</b></div><h2>Expenses</h2><div class="card">'+(L.length?'<ul>'+L.map(function(e){return'<li><div class="w"><strong>'+E(e.note||e.cat)+'</strong><span>'+e.cat+' · '+dt(e.ts)+'</span></div><b class="out">'+F(e.amt)+'</b><button class="x" data-a="dele" data-i="'+e.id+'" aria-label="Delete expense">×</button></li>'}).join("")+'</ul>':'<p class="empty">No expenses yet.</p>')+'</div>'}
+function bars(a,c){var m=Math.max.apply(null,a.map(function(x){return Math.abs(x[1])}).concat(1));return a.length?a.map(function(x){return'<div class="br"><span>'+E(x[0])+'</span><div><i class="'+(x[1]<0?"n":(c||""))+'" style="width:'+Math.max(2,Math.abs(x[1])/m*100)+'%"></i></div><b>'+F(x[1])+'</b></div>'}).join(""):'<p class="empty">No data yet.</p>'}
+function months(f){var r=[];for(var k=5;k>=0;k--)r.push([new Date(mS(k)).toLocaleString("en-GB",{month:"short"}),f(mS(k),k?mS(k-1):1e15)]);return r}
+function top(m,n){return Object.keys(m).map(function(k){return[k,m[k]]}).sort(function(a,b){return b[1]-a[1]}).slice(0,n)}
+function reports(){
+var rA=rev(0),eA=exp(0),rM=rev(mS(0)),eM=exp(mS(0)),pr={},du={},ca={};
+del().forEach(function(o){pr[o.item]=(pr[o.item]||0)+o.t});
+S.o.forEach(function(o){if(o.t>o.a)du[o.c]=(du[o.c]||0)+o.t-o.a});
+S.e.forEach(function(e){ca[e.cat]=(ca[e.cat]||0)+e.amt});
+var R=[["Total revenue",rM,rA,"bl"],["Total expenses",eM,eA,"out"],["Gross profit",rM-exp(mS(0),0,"Raw materials"),rA-exp(0,0,"Raw materials"),"in"],["Net profit",rM-eM,rA-eA,"in"]];
+var C=function(h,b){return'<h2>'+h+'</h2><div class="card">'+b+'</div>'};
+return'<div class="cols">'+C("Profit & loss",'<table><tr><td></td><td>This month</td><td>All time</td></tr>'+R.map(function(x){var c=function(v){return x[3]==="in"&&v<0?"out":x[3]};return'<tr><td>'+x[0]+'</td><td class="'+c(x[1])+'">'+F(x[1])+'</td><td class="'+c(x[2])+'">'+F(x[2])+'</td></tr>'}).join("")+'</table><p class="empty" style="margin-top:8px;font-size:.8rem">Gross profit = revenue minus raw materials.</p>')+C("Monthly profit",bars(months(function(a,b){return rev(a,b)-exp(a,b)})))+C("Revenue growth",bars(months(rev),"b"))+C("Best-selling products",bars(top(pr,5),"b"))+C("Expense breakdown",bars(top(ca,6),"r"))+C("Outstanding by customer",bars(top(du,6),"b"))+'</div>'}
+function modal(title,fs,ok,lbl){
+var m=$("modal");
+m.innerHTML='<div class="sheet"><h2>'+title+'</h2>'+fs.map(function(f){return'<label>'+f[1]+(f[2]==="sel"?'<select id="f_'+f[0]+'">'+f[3].map(function(x){return'<option>'+x+'</option>'}).join("")+'</select>':'<input id="f_'+f[0]+'" type="'+(f[2]||"text")+'"'+(f[2]==="number"?' inputmode="decimal" min="0" step="any"':'')+' value="'+E(f[3]||"")+'">')+'</label>'}).join("")+'<div class="bt"><button data-a="x">Cancel</button><button class="p" id="mok">'+(lbl||"Save")+'</button></div></div>';
+m.hidden=false;
+$("mok").onclick=function(){var v={};fs.forEach(function(f){v[f[0]]=$("f_"+f[0]).value.trim()});if(ok(v)!==false){m.hidden=true;sv();render()}};
+}
+function newOrder(){modal("New sale / order",[["c","Customer name"],["p","Phone","tel"],["item","Product"],["t","Order value (৳)","number"],["a","Paid so far (৳)","number"],["s","Delivery status","sel",["Pending","Delivered"]]],function(v){
+var t=+v.t;if(!v.c||!(t>0))return false;
+var d=v.s==="Delivered",a=v.a===""?(d?t:0):Math.min(+v.a||0,t);
+S.o.push({id:now()+"",c:v.c,p:v.p,item:v.item||"Item",t:t,a:a,s:d?"D":"P",ts:now(),dd:d?now():0})})}
+function newExp(){modal("Add expense",[["cat","Category","sel",EC],["amt","Amount (৳)","number"],["note","Note (optional)"]],function(v){
+var m=+v.amt;if(!(m>0))return false;
+S.e.push({id:now()+"",cat:v.cat,amt:m,note:v.note,ts:now()})})}
+function render(){
+$("v").innerHTML=({home:home,sales:sales,orders:orders,expenses:expenses,reports:reports})[tab]();
+document.querySelectorAll("nav button").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.i===tab)});
+$("nm").textContent=S.n||"ShopBook"}
+document.addEventListener("click",function(e){
+var b=e.target.closest("[data-a]");if(!b)return;
+var a=b.dataset.a,i=b.dataset.i,o=S.o.filter(function(x){return x.id===i})[0];
+if(a==="tab"){tab=i;scrollTo(0,0)}
+else if(a==="per")per=i;
+else if(a==="x"){$("modal").hidden=true;return}
+else if(a==="new"){newOrder();return}
+else if(a==="newe"){newExp();return}
+else if(a==="name"){modal("Business name",[["n","Name","text",S.n||""]],function(v){S.n=v.n||"ShopBook"});return}
+else if(a==="pay"){modal("Receive payment",[["m","Amount (due "+F(o.t-o.a)+")","number"]],function(v){var m=+v.m;if(!(m>0))return false;o.a=Math.min(o.t,o.a+m)});return}
+else if(a==="dlv"){o.s="D";o.dd=now();sv()}
+else if(a==="delo"){modal("Delete this order?",[],function(){S.o=S.o.filter(function(x){return x!==o})},"Delete");return}
+else if(a==="dele"){modal("Delete this expense?",[],function(){S.e=S.e.filter(function(x){return x.id!==i})},"Delete");return}
+render()});
+$("lg").innerHTML=LOGO;render();
+})();
+</script>
+</body>
+</html>

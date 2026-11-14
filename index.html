@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>My Business</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230a0a0a'/%3E%3Crect x='7' y='17' width='4.5' height='8' rx='1.2' fill='%23fff'/%3E%3Crect x='13.75' y='12' width='4.5' height='13' rx='1.2' fill='%23fff'/%3E%3Crect x='20.5' y='7' width='4.5' height='18' rx='1.2' fill='%230a8f4d'/%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fff;--card:#fff;--ink:#0a0a0a;--mut:#6b6b6b;--line:#e4e4e4;--soft:#f5f5f5;--g:#0a8f4d;--r:#d92d20;--b:#1d5fd1;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#000;--card:#0b0b0b;--ink:#f5f5f5;--mut:#9a9a9a;--line:#262626;--soft:#141414;--g:#3ddc84;--r:#ff6b5e;--b:#6ea8ff}}
+:root[data-theme="dark"]{--bg:#000;--card:#0b0b0b;--ink:#f5f5f5;--mut:#9a9a9a;--line:#262626;--soft:#141414;--g:#3ddc84;--r:#ff6b5e;--b:#6ea8ff}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 "Instrument Sans",system-ui,-apple-system,"Segoe UI",sans-serif;font-variant-numeric:tabular-nums}
+.app{display:grid;grid-template-columns:210px 1fr;min-height:100vh}
+nav{border-right:1px solid var(--line);padding:28px 16px;position:sticky;top:0;height:100vh;align-self:start}
+.brand{font-weight:700;font-size:18px;margin:0 8px 28px;letter-spacing:-.01em;display:flex;align-items:center;gap:10px}
+nav a{display:block;padding:9px 12px;border-radius:8px;color:var(--mut);text-decoration:none;font-weight:500;margin-bottom:2px}
+nav a:hover{color:var(--ink)}
+nav a.on{background:var(--ink);color:var(--bg)}
+main{padding:32px clamp(16px,4vw,44px) 60px;max-width:1100px;width:100%}
+h1{font-size:26px;margin:0 0 4px;letter-spacing:-.02em}
+.sub{color:var(--mut);margin:0 0 24px}
+h2{font-size:15px;margin:28px 0 10px;font-weight:600}
+.hero{border:1px solid var(--line);border-radius:14px;padding:22px;display:flex;justify-content:space-between;gap:20px;align-items:flex-end;flex-wrap:wrap;margin-bottom:14px}
+.hero .big{font-size:clamp(36px,7vw,60px);font-weight:700;letter-spacing:-.03em;line-height:1}
+.hero svg{width:min(100%,320px);height:auto}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
+.tile{border:1px solid var(--line);border-radius:10px;padding:14px 16px;background:var(--card)}
+.tile span{display:block;color:var(--mut);font-size:13px}
+.tile b{font-size:22px;font-weight:650;letter-spacing:-.01em}
+.g{color:var(--g)}.r{color:var(--r)}.bl{color:var(--b)}
+.card{border:1px solid var(--line);border-radius:10px;padding:16px;background:var(--card);margin-bottom:14px}
+form.f{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;align-items:end}
+label{font-size:12px;color:var(--mut);display:block}
+input,select{width:100%;padding:9px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font:inherit;margin-top:3px}
+input:focus-visible,select:focus-visible,button:focus-visible,a:focus-visible{outline:2px solid var(--b);outline-offset:2px}
+button{font:inherit;font-weight:600;border:1px solid var(--ink);background:var(--ink);color:var(--bg);border-radius:8px;padding:9px 14px;cursor:pointer}
+button.o{background:transparent;color:var(--ink);border-color:var(--line)}
+button.s{padding:5px 10px;font-size:13px}
+button.x{border-color:transparent;background:transparent;color:var(--mut);padding:5px 8px}
+button.x:hover{color:var(--r)}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;margin-bottom:12px}
+.seg button{border:0;border-radius:0;background:transparent;color:var(--mut);padding:7px 14px}
+.seg button.on{background:var(--ink);color:var(--bg)}
+.scroll{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{padding:9px 10px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap}
+th{font-weight:500;color:var(--mut);font-size:13px}
+td.n,th.n{text-align:right}
+.chip{display:inline-block;font-size:12px;font-weight:600;padding:2px 9px;border-radius:99px;border:1px solid currentColor}
+.ord{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;padding:14px 0;border-bottom:1px solid var(--line)}
+.ord:last-child{border:0}
+.ord small{color:var(--mut)}
+.hb{display:grid;grid-template-columns:120px 1fr auto;gap:10px;align-items:center;margin:8px 0;font-size:14px}
+.hb i{display:block;height:10px;border-radius:5px;background:var(--soft);position:relative}
+.hb i u{position:absolute;inset:0 auto 0 0;border-radius:5px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
+.two .card{margin:0}
+.empty{color:var(--mut);padding:14px 0}
+.mo{display:none}
+svg text{fill:var(--mut);font:11px "Instrument Sans",system-ui,sans-serif}
+@media(max-width:800px){
+.app{display:block}
+nav{position:fixed;bottom:0;left:0;right:0;top:auto;height:auto;z-index:20;display:flex;gap:2px;padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px));border-right:0;border-top:1px solid var(--line);background:var(--bg)}
+.brand{display:none}
+.mo{display:inline-block;vertical-align:-6px;margin-right:10px}
+nav a{flex:1;text-align:center;padding:9px 2px;font-size:12px;margin:0}
+main{padding-bottom:100px}
+.hb{grid-template-columns:90px 1fr auto}
+}
+</style>
+</head>
+<body>
+<div class="app">
+<nav id="nav"></nav>
+<main id="main"></main>
+</div>
+<script>
+const KEY="mybiz-v2";
+const $=s=>document.querySelector(s);
+const iso=d=>d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+const ago=n=>{const d=new Date();d.setDate(d.getDate()-n);return iso(d)};
+const fmt=n=>(n<0?"-":"")+"৳"+Math.round(Math.abs(n)).toLocaleString("en-US");
+const short=n=>Math.abs(n)>=1000?Math.round(n/1000)+"k":Math.round(n)+"";
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const sum=(a,f)=>a.reduce((t,x)=>t+f(x),0);
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+const mk=d=>d.slice(0,7);
+const ml=m=>new Date(+m.slice(0,4),+m.slice(5)-1,1).toLocaleString("en",{month:"short"});
+const months=n=>{const a=[];for(let k=n-1;k>=0;k--){const d=new Date();d.setDate(1);d.setMonth(d.getMonth()-k);a.push(mk(iso(d)))}return a};
+const LOGO=`<svg viewBox="0 0 32 32" width="28" height="28" role="img" aria-label="My Business logo"><rect width="32" height="32" rx="8" fill="var(--ink)"/><rect x="7" y="17" width="4.5" height="8" rx="1.2" fill="var(--bg)"/><rect x="13.75" y="12" width="4.5" height="13" rx="1.2" fill="var(--bg)"/><rect x="20.5" y="7" width="4.5" height="18" rx="1.2" fill="var(--g)"/></svg>`;
+const CATS=["Employee salaries","Raw materials","Transportation","Shop rent","Marketing","Other"];
+
+function seed(){
+ const P=[["Leather wallet",4800],["Tote bag",7200],["Leather belt",3900],["Backpack",11500]],C=["Rahim Traders","Nusrat Jahan","Karim Store","Sadia Boutique","Imran Hossain"];
+ const sales=[];for(let i=0;i<90;i++){const p=P[i%4];sales.push({id:"s"+i,date:ago(i*2),customer:C[i%5],product:p[0],amount:p[1]*(1+i%3)})}
+ const exp=[];for(let m=0;m<6;m++)[[CATS[0],45000],[CATS[1],24000+m*1500],[CATS[2],6500],[CATS[3],18000],[CATS[4],5000+m*400],[CATS[5],3200]].forEach((x,j)=>exp.push({id:"e"+m+j,date:ago(m*30+2),cat:x[0],note:"",amount:x[1]}));
+ const orders=[
+  {id:"o1",customer:"Sadia Boutique",phone:"01711-000111",product:"Tote bag × 40",value:288000,advance:100000,status:"pending",date:ago(5)},
+  {id:"o2",customer:"Rahim Traders",phone:"01819-222333",product:"Leather wallet × 25",value:120000,advance:60000,status:"pending",date:ago(3)},
+  {id:"o3",customer:"Karim Store",phone:"01911-444555",product:"Backpack × 10",value:115000,advance:115000,status:"delivered",deliveredOn:ago(2),date:ago(12)},
+  {id:"o4",customer:"Imran Hossain",phone:"01611-666777",product:"Leather belt × 15",value:58500,advance:20000,status:"pending",date:ago(1)},
+  {id:"o5",customer:"Nusrat Jahan",phone:"01511-888999",product:"Backpack × 2",value:23000,advance:23000,status:"delivered",deliveredOn:ago(9),date:ago(15)}];
+ return{sales,exp,orders};
+}
+let S=null;
+try{S=JSON.parse(localStorage.getItem(KEY))}catch(e){}
+if(!S||!S.sales)S={sales:[],exp:[],orders:[]};
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+const ui={period:"daily",of:"all"};
+
+const revs=()=>S.sales.map(s=>({date:s.date,amount:s.amount,product:s.product,customer:s.customer}))
+ .concat(S.orders.filter(o=>o.status==="delivered").map(o=>({date:o.deliveredOn||o.date,amount:o.value,product:o.product.replace(/\s*×.*$/,""),customer:o.customer})));
+const inM=(a,m)=>a.filter(x=>mk(x.date)===m);
+const bal=o=>Math.max(0,o.value-o.advance);
+function stats(){
+ const t=iso(new Date()),m=mk(t),R=revs();
+ const rev=sum(inM(R,m),x=>x.amount),exp=sum(inM(S.exp,m),x=>x.amount);
+ const cut=ago(30),act=new Set(R.filter(x=>x.date>=cut).map(x=>x.customer).concat(S.orders.filter(o=>o.date>=cut).map(o=>o.customer)));
+ return{today:sum(R.filter(x=>x.date===t),x=>x.amount),rev,exp,net:rev-exp,pend:S.orders.filter(o=>o.status==="pending").length,cust:act.size,out:sum(S.orders,bal),cash:sum(S.sales,s=>s.amount)+sum(S.orders,o=>o.advance)-sum(S.exp,e=>e.amount)};
+}
+function pl(m){
+ const rev=sum(inM(revs(),m),x=>x.amount),e=inM(S.exp,m),cogs=sum(e.filter(x=>x.cat==="Raw materials"),x=>x.amount),opex=sum(e,x=>x.amount)-cogs;
+ return{m,rev,cogs,gross:rev-cogs,opex,net:rev-cogs-opex};
+}
+
+function vbars(items){
+ const W=600,H=200,n=items.length,bw=W/n,mx=Math.max(1,...items.map(i=>Math.abs(i.v))),neg=items.some(i=>i.v<0),y0=neg?(H-24)/2:H-24,sc=((neg?(H-24)/2:H-24)-16)/mx;
+ let s=`<svg viewBox="0 0 ${W} ${H}" width="100%" role="img">`;
+ items.forEach((it,i)=>{const h=Math.abs(it.v)*sc,x=i*bw+bw*.2,y=it.v>=0?y0-h:y0,col=it.c||(it.v>=0?"var(--g)":"var(--r)");
+  s+=`<rect x="${x}" y="${y}" width="${bw*.6}" height="${Math.max(h,1)}" rx="3" fill="${col}"/><text x="${x+bw*.3}" y="${it.v>=0?y-4:y+h+11}" text-anchor="middle">${short(it.v)}</text><text x="${x+bw*.3}" y="${H-6}" text-anchor="middle">${it.l}</text>`});
+ return s+`<line x1="0" x2="${W}" y1="${y0}" y2="${y0}" stroke="var(--line)"/></svg>`;
+}
+function hbars(items,col){
+ if(!items.length)return`<div class="empty">No data yet.</div>`;
+ const mx=Math.max(1,...items.map(i=>i.v));
+ return items.map(i=>`<div class="hb"><span>${esc(i.l)}</span><i><u style="width:${i.v/mx*100}%;background:${col}"></u></i><b>${fmt(i.v)}</b></div>`).join("");
+}
+const group=(a,f)=>{const o={};a.forEach(x=>{const k=f(x);o[k]=(o[k]||0)+x.amount});return Object.entries(o).map(([l,v])=>({l,v}))};
+const field=(l,n,t="text",x="")=>`<label>${l}<input name="${n}" type="${t}" ${x}></label>`;
+
+const V={
+dash(){
+ const s=stats(),ms=months(6).map(m=>({l:ml(m),v:pl(m).net}));
+ const T=(l,v,c="")=>`<div class="tile"><span>${l}</span><b class="${c}">${v}</b></div>`;
+ return`<h1><span class="mo">${LOGO}</span>My Business</h1><p class="sub">${new Date().toLocaleDateString("en",{weekday:"long",day:"numeric",month:"long",year:"numeric"})}</p>
+ <div class="hero"><div><span class="sub" style="margin:0">Net profit this month</span><div class="big ${s.net>=0?"g":"r"}">${fmt(s.net)}</div></div>${vbars(ms)}</div>
+ <div class="grid">${T("Today’s sales",fmt(s.today),"bl")}${T("Monthly revenue",fmt(s.rev),"bl")}${T("Total expenses",fmt(s.exp),"r")}${T("Pending orders",s.pend)}${T("Active customers",s.cust)}${T("Outstanding payments",fmt(s.out),"bl")}${T("Available cash balance",fmt(s.cash),"bl")}</div>`;
+},
+sales(){
+ const R=revs().sort((a,b)=>b.date<a.date?-1:1),p=ui.period;
+ const key=x=>p==="daily"?x.date:p==="monthly"?mk(x.date):(()=>{const d=new Date(x.date+"T00:00:00");d.setDate(d.getDate()-(d.getDay()+6)%7);return iso(d)})();
+ const g=group(R,key).sort((a,b)=>a.l<b.l?1:-1).slice(0,p==="daily"?10:8);
+ const cnt={};R.forEach(x=>{const k=key(x);cnt[k]=(cnt[k]||0)+1});
+ return`<h1>Sales</h1><p class="sub">Record sales and review them by day, week or month.</p>
+ <form class="f card" data-f="sale">${field("Date","date","date",`value="${iso(new Date())}" required`)}${field("Customer","customer","text",'placeholder="Walk-in"')}${field("Product","product","text","required")}${field("Amount (৳)","amount","number",'min="1" required')}<button>Add sale</button></form>
+ <div class="seg">${["daily","weekly","monthly"].map(x=>`<button data-a="period" data-v="${x}" class="${p===x?"on":""}">${x[0].toUpperCase()+x.slice(1)}</button>`).join("")}</div>
+ <div class="card scroll"><table><tr><th>${p==="weekly"?"Week starting":p==="monthly"?"Month":"Date"}</th><th class="n">Sales</th><th class="n">Revenue</th></tr>${g.map(r=>`<tr><td>${r.l}</td><td class="n">${cnt[r.l]}</td><td class="n bl">${fmt(r.v)}</td></tr>`).join("")}</table></div>
+ <h2>Recent sales</h2><div class="card scroll"><table>${[...S.sales].sort((a,b)=>b.date<a.date?-1:1).slice(0,12).map(x=>`<tr><td>${x.date}</td><td>${esc(x.customer||"Walk-in")}</td><td>${esc(x.product)}</td><td class="n">${fmt(x.amount)}</td><td class="n"><button class="x" data-a="dels" data-v="${x.id}" aria-label="Delete sale">✕</button></td></tr>`).join("")}</table></div>`;
+},
+orders(){
+ const f=ui.of,L=S.orders.filter(o=>f==="all"||o.status===f).sort((a,b)=>b.date<a.date?-1:1);
+ return`<h1>Orders</h1><p class="sub">Customer orders, advance payments and delivery.</p>
+ <form class="f card" data-f="order">${field("Customer","customer","text","required")}${field("Phone","phone","tel")}${field("Product details","product","text","required")}${field("Order value (৳)","value","number",'min="1" required')}${field("Advance (৳)","advance","number",'min="0" value="0"')}<button>Add order</button></form>
+ <div class="seg">${["all","pending","delivered"].map(x=>`<button data-a="of" data-v="${x}" class="${f===x?"on":""}">${x[0].toUpperCase()+x.slice(1)}</button>`).join("")}</div>
+ <div class="card">${L.length?L.map(o=>`<div class="ord"><div><b>${esc(o.customer)}</b> <small>${esc(o.phone||"")}</small><br><small>${esc(o.product)} · ${o.date}</small></div>
+ <div style="text-align:right"><span class="chip ${o.status==="delivered"?"g":"bl"}">${o.status}</span><br><small>Value ${fmt(o.value)} · Advance ${fmt(o.advance)}</small><br><b class="${bal(o)?"r":"g"}">Balance ${fmt(bal(o))}</b></div>
+ <div>${bal(o)?`<button class="o s" data-a="collect" data-v="${o.id}">Collect balance</button> `:""}${o.status==="pending"?`<button class="s" data-a="deliver" data-v="${o.id}">Mark delivered</button> `:""}<button class="x" data-a="delo" data-v="${o.id}" aria-label="Delete order">✕</button></div></div>`).join(""):`<div class="empty">No orders in this view.</div>`}</div>`;
+},
+expenses(){
+ const m=mk(iso(new Date())),tot=group(inM(S.exp,m),x=>x.cat).sort((a,b)=>b.v-a.v);
+ return`<h1>Expenses</h1><p class="sub">Everything the business spends, by category.</p>
+ <form class="f card" data-f="exp">${field("Date","date","date",`value="${iso(new Date())}" required`)}<label>Category<select name="cat">${CATS.map(c=>`<option>${c}</option>`).join("")}</select></label>${field("Note","note")}${field("Amount (৳)","amount","number",'min="1" required')}<button>Add expense</button></form>
+ <h2>This month by category</h2><div class="card">${hbars(tot,"var(--r)")}</div>
+ <h2>Recent expenses</h2><div class="card scroll"><table>${[...S.exp].sort((a,b)=>b.date<a.date?-1:1).slice(0,14).map(x=>`<tr><td>${x.date}</td><td>${x.cat}</td><td>${esc(x.note||"")}</td><td class="n r">${fmt(x.amount)}</td><td class="n"><button class="x" data-a="dele" data-v="${x.id}" aria-label="Delete expense">✕</button></td></tr>`).join("")}</table></div>`;
+},
+pnl(){
+ const ms=months(6).map(pl),T=k=>sum(ms,x=>x[k]);
+ return`<h1>Profit &amp; loss</h1><p class="sub">Calculated automatically from your sales, orders and expenses. Gross profit is revenue minus raw materials.</p>
+ <div class="grid"><div class="tile"><span>Revenue (6 months)</span><b class="bl">${fmt(T("rev"))}</b></div><div class="tile"><span>Expenses (6 months)</span><b class="r">${fmt(T("cogs")+T("opex"))}</b></div><div class="tile"><span>Gross profit</span><b class="${T("gross")>=0?"g":"r"}">${fmt(T("gross"))}</b></div><div class="tile"><span>Net profit</span><b class="${T("net")>=0?"g":"r"}">${fmt(T("net"))}</b></div></div>
+ <h2>Monthly profit trend</h2><div class="card">${vbars(ms.map(x=>({l:ml(x.m),v:x.net})))}</div>
+ <div class="card scroll"><table><tr><th>Month</th><th class="n">Revenue</th><th class="n">Raw materials</th><th class="n">Gross profit</th><th class="n">Other expenses</th><th class="n">Net profit</th></tr>${[...ms].reverse().map(x=>`<tr><td>${ml(x.m)} ${x.m.slice(0,4)}</td><td class="n bl">${fmt(x.rev)}</td><td class="n r">${fmt(x.cogs)}</td><td class="n">${fmt(x.gross)}</td><td class="n r">${fmt(x.opex)}</td><td class="n ${x.net>=0?"g":"r"}"><b>${fmt(x.net)}</b></td></tr>`).join("")}</table></div>`;
+},
+analytics(){
+ const R=revs(),ms=months(6),m=ms[5];
+ const prod=group(R,x=>x.product).sort((a,b)=>b.v-a.v).slice(0,5);
+ const ex=group(inM(S.exp,m),x=>x.cat).sort((a,b)=>b.v-a.v);
+ const out=group(S.orders.filter(bal).map(o=>({customer:o.customer,amount:bal(o)})),x=>x.customer).sort((a,b)=>b.v-a.v);
+ return`<h1>Analytics</h1><p class="sub">How the business is moving.</p>
+ <div class="two"><div class="card"><h2 style="margin-top:0">Revenue growth</h2>${vbars(ms.map(x=>({l:ml(x),v:sum(inM(R,x),y=>y.amount),c:"var(--b)"})))}</div>
+ <div class="card"><h2 style="margin-top:0">Monthly profit</h2>${vbars(ms.map(x=>({l:ml(x),v:pl(x).net})))}</div></div>
+ <div class="two" style="margin-top:14px"><div class="card"><h2 style="margin-top:0">Best-selling products</h2>${hbars(prod,"var(--b)")}</div>
+ <div class="card"><h2 style="margin-top:0">Expense breakdown (this month)</h2>${hbars(ex,"var(--r)")}</div></div>
+ <div class="card" style="margin-top:14px"><h2 style="margin-top:0">Outstanding customer payments</h2>${hbars(out,"var(--b)")}</div>`;
+}};
+const TABS=[["dash","Dashboard"],["sales","Sales"],["orders","Orders"],["expenses","Expenses"],["pnl","Profit & Loss"],["analytics","Analytics"]];
+function render(){
+ let h=location.hash.slice(1);if(!V[h])h="dash";
+ $("#nav").innerHTML=`<div class="brand">${LOGO}My Business</div>`+TABS.map(t=>`<a href="#${t[0]}" class="${t[0]===h?"on":""}">${t[1].replace("Profit & Loss","P&amp;L").replace("Dashboard","Home")}</a>`).join("");
+ if(innerWidth>800)$("#nav").querySelectorAll("a").forEach((a,i)=>a.innerHTML=TABS[i][1].replace("&","&amp;"));
+ $("#main").innerHTML=V[h]();
+}
+addEventListener("hashchange",()=>{render();scrollTo(0,0)});
+addEventListener("resize",()=>{clearTimeout(window._t);window._t=setTimeout(render,150)});
+document.addEventListener("submit",e=>{
+ const f=e.target.dataset.f;if(!f)return;e.preventDefault();
+ const d=Object.fromEntries(new FormData(e.target)),n=x=>+d[x]||0;
+ if(f==="sale")S.sales.push({id:uid(),date:d.date,customer:d.customer.trim(),product:d.product.trim(),amount:n("amount")});
+ if(f==="order")S.orders.push({id:uid(),date:iso(new Date()),customer:d.customer.trim(),phone:d.phone,product:d.product.trim(),value:n("value"),advance:Math.min(n("advance"),n("value")),status:"pending"});
+ if(f==="exp")S.exp.push({id:uid(),date:d.date,cat:d.cat,note:d.note.trim(),amount:n("amount")});
+ save();render();
+});
+document.addEventListener("click",e=>{
+ const b=e.target.closest("[data-a]");if(!b)return;
+ const a=b.dataset.a,v=b.dataset.v,o=S.orders.find(x=>x.id===v);
+ if(a==="period")ui.period=v;
+ if(a==="of")ui.of=v;
+ if(a==="dels")S.sales=S.sales.filter(x=>x.id!==v);
+ if(a==="dele")S.exp=S.exp.filter(x=>x.id!==v);
+ if(a==="delo")S.orders=S.orders.filter(x=>x.id!==v);
+ if(a==="collect"&&o)o.advance=o.value;
+ if(a==="deliver"&&o){o.status="delivered";o.deliveredOn=iso(new Date())}
+ save();render();
+});
+render();
+</script>
+</body>
+</html>
